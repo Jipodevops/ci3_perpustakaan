@@ -60,7 +60,7 @@
     </a>
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="<?php echo site_url('');?>">Koleksi Buku</a>
+        <a class="collapse-item" href="<?php echo site_url('buku');?>">Koleksi Buku</a>
         <a class="collapse-item" href="<?php echo site_url('');?>">Kategori Buku</a>
         <a class="collapse-item" href="<?php echo site_url('');?>">Rak Buku</a>
       </div>

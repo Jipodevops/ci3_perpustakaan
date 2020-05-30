@@ -14,7 +14,9 @@
   <!-- css yang digunakan theme -->
   <link href="<?php echo base_url('assets/vendor/fontawesome-free/css/all.min.css');?>" rel="stylesheet" type="text/css"> 
   <link href="<?php echo base_url('assets/css/sb-admin-2.min.css');?>" rel="stylesheet">
+  <link href="<?php echo base_url('assets/css/custom.css');?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/vendor/bootstrap/scss/_dataTables.scss');?>" rel="stylesheet">
+  
 
   <!-- js untuk pie chart -->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

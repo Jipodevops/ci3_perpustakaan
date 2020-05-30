@@ -50,12 +50,12 @@
 							<td><?php echo $mhs['nama_prodi']; ?></td>
 							<td><?php echo $mhs['status_mahasiswa']; ?></td>
 							<td>
-								<a href="<?php echo site_url('');?>" class="btn btn-warning btn-icon-split">
-									<span class="text">Ubah</span>
+								<a href="<?php echo site_url('mahasiswa/update/'.$mhs['NIM']);?>" class="btn btn-warning btn-circle">
+									<i class="fas fa-edit"></i>
 								</a>
-								&nbsp;
-								<a href="<?php echo site_url('');?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-icon-split">
-									<span class="text">Hapus</span>
+	
+								<a href="<?php echo site_url('mahasiswa/delete/'.$mhs['NIM']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
+									<i class="fas fa-trash"></i>
 								</a>
 							</td>
 						</tr>

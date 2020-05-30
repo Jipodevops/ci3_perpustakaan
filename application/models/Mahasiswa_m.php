@@ -13,18 +13,29 @@ class Mahasiswa_m extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function readRow($id){
+		$this->db->select('*');
+		$this->db->from('mahasiswa');
+		$this->db->join('prodi', 'mahasiswa.kode_prodi = prodi.kode_prodi');
+		$this->db->where('NIM', $id);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
 
 	public function insert($data) {
-		//$input = data yang dikirim dari controller
 		return $this->db->insert('mahasiswa', $data);
 	}
 
 	public function update($input, $id) {
-	
+		$this->db->where('NIM', $id);
+
+		return $this->db->update('mahasiswa', $input);
 	}
 
 
 	public function delete($id) {
-		
+		$this->db->where('NIM', $id);
+		return $this->db->delete('mahasiswa');
 	}
 }
