@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Pemrograman Web 2 - <?php echo $judul;;?></title>
+
+  <!-- css yang digunakan theme -->
+  <link href="<?php echo base_url('assets/vendor/fontawesome-free/css/all.min.css');?>" rel="stylesheet" type="text/css"> 
+  <link href="<?php echo base_url('assets/css/sb-admin-2.min.css');?>" rel="stylesheet">
+  <link href="<?php echo base_url('assets/vendor/bootstrap/scss/_dataTables.scss');?>" rel="stylesheet">
+
+  <!-- js untuk pie chart -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+  <!-- js yang digunakan theme -->
+  <script src="<?php echo base_url('assets/vendor/jquery/jquery.min.js');?>"></script>
+  <script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
+  <script src="<?php echo base_url('assets/vendor/jquery-easing/jquery.easing.min.js');?>"></script>
+  <script src="<?php echo base_url('assets/vendor/jquery/jquery.dataTables.min.js');?>"></script>
+  <script src="<?php echo base_url('assets/vendor/jquery/dataTables.bootstrap4.min.js');?>"></script>
+ 
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- load sidebar -->
+    <?php $this->load->view('theme/sidebar');;?>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- load header -->
+        <?php $this->load->view('theme/header');;?>
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- load halaman sesuai controller yang dipilih dari sidebar -->
+          <?php $this->load->view($theme_page);;?>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- load footer -->
+      <?php $this->load->view('theme/footer');;?>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+    
+</body>
+
+</html>
+<script src="<?php echo base_url('assets/js/sb-admin-2.min.js');?>"></script>
+
+
