@@ -36,4 +36,16 @@ class KategoriBuku_model extends CI_Model {
 		return $this->db->delete('kategori_buku');
 	}
 
+	public function exportRow($id){
+		$this->db->select('*');
+		$this->db->from('kategori_buku');
+		$this->db->join('buku', 'kategori_buku.id_kategoribuku = buku.id_kategoribuku');
+		$this->db->where('kategori_buku.id_kategoribuku', $id);
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	
+
 }

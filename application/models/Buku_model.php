@@ -53,7 +53,8 @@ class Buku_model extends CI_Model {
 
 	public function cariBuku(){
 		$this->db->select('*');
-        $this->db->limit(10);
-        return $this->db->get('buku')->result_array();
+		$this->db->from('buku');
+		$this->db->where('buku.id_buku NOT IN(SELECT id_buku from tmp)');
+        return $this->db->get()->result_array();
 	}
 }

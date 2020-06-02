@@ -32,6 +32,13 @@ class Mahasiswa_m extends CI_Model {
         return $this->db->get("mahasiswa")->row_array();
 	}
 
+	public function cekNIM(){
+		$this->db->select('*');
+		$this->db->from('mahasiswa', 'peminjaman');
+		$this->db->where('mahasiswa.NIM NOT IN(SELECT NIM FROM peminjaman WHERE status = "N")');
+		return $this->db->get()->result_array();
+	}
+
 	public function update($input, $id) {
 		$this->db->where('NIM', $id);
 
@@ -42,5 +49,17 @@ class Mahasiswa_m extends CI_Model {
 	public function delete($id) {
 		$this->db->where('NIM', $id);
 		return $this->db->delete('mahasiswa');
+
+	}
+
+	public function export_all(){
+		$this->db->select('*');
+		$this->db->from('mahasiswa');
+		$this->db->join('prodi', 'mahasiswa.kode_prodi = prodi.kode_prodi');
+		$this->db->join('fakultas', 'prodi.kode_fakultas = fakultas.kode_fakultas');
+		$this->db->order_by('NIM ASC');
+		$this->db->order_by('mahasiswa.kode_prodi ASC');
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 }

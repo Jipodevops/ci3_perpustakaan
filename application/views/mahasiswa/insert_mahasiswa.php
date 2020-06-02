@@ -17,7 +17,7 @@
 				<tr>
 					<td>Jenis Kelamin</td>
 					<td>
-                        <select name="jenkel" class="form-control">
+                        <select name="jenkel" class="form-control select">
                             <option>pilih jenis kelamin</option>
                             <option value="Laki - laki">Laki - laki</option>
                             <option value="Perempuan">Perempuan</option>

@@ -4,7 +4,7 @@
 <div class="my-2"></div>
 
 <!-- button tambah data mahasiswa -->
-<a href="<?php echo site_url('peminjaman/insert');?>" class="btn btn-success btn-icon-split">
+<a href="<?php echo site_url('pengembalian/insert');?>" class="btn btn-success btn-icon-split">
 	<span class="icon text-white-50">
 		<i class="fas fa-plus-circle"></i>
 	</span>
@@ -24,17 +24,31 @@
 					<tr>
 						<th>#</th>
 						<th>Kode Pengembalian</th>
+						<th>Tanggal Pengembalian</th>
                         <th>Kode Peminjaman</th>
                         <th>NIM dan Nama</th>
-						<th>Tanggal Pinjam</th>
-                        <th>Jatuh Tempo</th>
-                        <th>Status</th>
+						<th>Tanggal Peminjaman</th>
+                        <th>Nominal Denda</th>
 					</tr>
 				</thead>
 				<tbody>
-					
+                    <?php 
+                        $i = 1;
+                        foreach ($data_pengembalian as $data):
+                    ?>
+                        <tr>
+                            <td><?php echo $i++; ?></td>
+                            <td><?php echo $data['kode_pengemblian'] ?></td>
+							<td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pinjam'])) ?></td>
+                            <td><?php echo $data['kode_peminjaman'] ?></td>
+                            <td><?php echo $data['NIM'].' - '.$data['nama'] ?></td>
+                            <td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pengembalian'])) ?></td>
+                            <td><?php echo 'Rp.'.number_format($data['total_denda']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
 				</tbody>
 			</table>
+			
 		</div>
 	</div>
 </div>

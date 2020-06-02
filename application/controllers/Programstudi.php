@@ -3,6 +3,10 @@
         public function __construct(){
             parent::__construct();
 
+            if(empty($this->session->userdata('id_petugas'))) {
+                redirect('login');
+            }
+
             $this->load->model(array('programstudi_model', 'fakultas_model'));
         }
 
@@ -87,5 +91,51 @@
             $data_prodi = $this->programstudi_model->delete($id);
 
             redirect('programstudi');
+        }
+
+        public function export() {
+            //function read berfungsi mengambil/read data dari table provinsi di database
+            $id = $this->uri->segment(3);
+    
+            $data_prodi = $this->programstudi_model->read_mahasiswa($id);
+            
+            //load library excel
+            $this->load->library('excel');
+            $excel = $this->excel;
+    
+            //judul sheet excel
+            $excel->setActiveSheetIndex(0)->setTitle('Export Data');
+    
+            //header table
+            $excel->getActiveSheet()->setCellValue( 'A1', 'Kode Prodi');
+            $excel->getActiveSheet()->setCellValue( 'B1', 'Nama Prodi');
+            $excel->getActiveSheet()->setCellValue( 'C1', 'NIM');
+            $excel->getActiveSheet()->setCellValue( 'D1', 'Nama');
+    
+            //baris awal data dimulai baris 2 (baris 1 digunakan header)
+            $baris = 2;
+    
+            foreach($data_prodi as $data) {
+    
+                //mengisi data ke excel per baris
+                $excel->getActiveSheet()->setCellValue( 'A'.$baris, $data['kode_prodi']);
+                $excel->getActiveSheet()->setCellValue( 'B'.$baris, $data['nama_prodi']);
+                $excel->getActiveSheet()->setCellValue( 'C'.$baris, $data['NIM']);
+                $excel->getActiveSheet()->setCellValue( 'D'.$baris, $data['nama']);
+    
+    
+                //increment baris untuk data selanjutnya
+                $baris++;
+            }
+    
+            //nama file excel
+            $filename='export_mahasiswa_per_prodi.xls';
+    
+            //konfigurasi file excel
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
         }
     }

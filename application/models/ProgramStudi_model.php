@@ -44,4 +44,16 @@ class ProgramStudi_model extends CI_Model {
 		
 		return $this->db->delete('prodi');
 	}
+
+	public function read_mahasiswa($id){
+		$this->db->select('*');
+		$this->db->from('prodi');
+		$this->db->join('mahasiswa', 'prodi.kode_prodi = mahasiswa.kode_prodi', 
+			'inner');
+		$this->db->where('mahasiswa.kode_prodi',$id);
+		$query = $this->db->get();
+
+		//query->row_array = mengirim data ke controller dalam bentuk 1 data
+        return $query->result_array();
+    }
 }

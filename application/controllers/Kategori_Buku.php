@@ -3,6 +3,10 @@
         public function __construct(){
             parent::__construct();
 
+            if(empty($this->session->userdata('id_petugas'))) {
+                redirect('login');
+            }
+
             $this->load->model(array('kategoribuku_model'));
         }
 
@@ -73,4 +77,59 @@
             $data_rakbuku = $this->kategoribuku_model->delete($id);
             redirect('kategori_buku');
         }
+
+        public function export_single(){
+            $id = $this->uri->segment(3);
+       
+            $data_kategori = $this->kategoribuku_model->exportRow($id);
+       
+            //function read berfungsi mengambil/read data dari table provinsi di database
+            //load library excel
+            $this->load->library('excel');
+            $excel = $this->excel;
+    
+            //judul sheet excel
+            $excel->setActiveSheetIndex(0)->setTitle('Laporan Transaksi Peminjaman');
+    
+            //header table
+            $excel->getActiveSheet()->setCellValue( 'A1', 'No.');
+            $excel->getActiveSheet()->setCellValue( 'B1', 'Kategori Buku');
+            $excel->getActiveSheet()->setCellValue( 'C1', 'Judul');
+            $excel->getActiveSheet()->setCellValue( 'D1', 'Penulis');
+            $excel->getActiveSheet()->setCellValue( 'E1', 'Penerbit');
+            $excel->getActiveSheet()->setCellValue( 'F1', 'Tahun Terbit');
+            $excel->getActiveSheet()->setCellValue( 'G1', 'Jumlah');
+    
+    
+    
+            //baris awal data dimulai baris 2 (baris 1 digunakan header)
+            $baris = 2;
+            $no = 1;
+            foreach($data_kategori as $data) {
+    
+                //mengisi data ke excel per baris
+                $excel->getActiveSheet()->setCellValue( 'A'.$baris, $no++);
+                $excel->getActiveSheet()->setCellValue( 'B'.$baris, $data['kategori_buku']);
+                $excel->getActiveSheet()->setCellValue( 'C'.$baris, $data['judul']);
+                $excel->getActiveSheet()->setCellValue( 'D'.$baris, $data['penulis']);
+                $excel->getActiveSheet()->setCellValue( 'E'.$baris, $data['penerbit']);
+                $excel->getActiveSheet()->setCellValue( 'F'.$baris, $data['tahun_terbit']);
+                $excel->getActiveSheet()->setCellValue( 'G'.$baris, $data['jumlah']);
+    
+    
+                //increment baris untuk data selanjutnya
+                $baris++;
+            }
+    
+            //nama file excel
+            $filename='laporan_buku_per_kategori.xls';
+    
+            //konfigurasi file excel
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
+       }
+
     }

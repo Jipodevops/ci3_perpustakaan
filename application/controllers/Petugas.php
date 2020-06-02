@@ -3,6 +3,10 @@
         public function __construct(){
             parent::__construct();
 
+            if(empty($this->session->userdata('id_petugas'))) {
+                redirect('login');
+            }
+
             $this->load->model(array('petugas_model'));
         }
 
@@ -36,11 +40,18 @@
             $alamat = $this->input->post('alamat');
             $no_hp = $this->input->post('no_hp');
 
+            $username = $this->input->poat('username');
+            $psw = $this->input->poat('psw');
+
+            $pswenc = $this->encryption->encrypt($psw);
+
             $data = array(
                 'nama' => $nama,
                 'jenis_kelamin' => $jenkel,
                 'alamat' => $alamat,
-                'no_telepon' => $no_hp
+                'no_telepon' => $no_hp,
+                'username' => $username,
+                'psw' => $pswenc
             );
 
             $this->petugas_model->insert($data);
@@ -67,12 +78,14 @@
             $jenkel = $this->input->post('jenkel');
             $alamat = $this->input->post('alamat');
             $no_hp = $this->input->post('no_hp');
+            $username = $this->input->post('username');
 
             $data = array(
                 'nama' => $nama,
                 'jenis_kelamin' => $jenkel,
                 'alamat' => $alamat,
-                'no_telepon' => $no_hp
+                'no_telepon' => $no_hp,
+                'username' => $username
             );
 
             $data_mahasiswa = $this->petugas_model->update($data, $id);
@@ -85,5 +98,56 @@
 
             $data_petugas = $this->petugas_model->delete($id);
             redirect('petugas');
+        }
+
+        public function export_single(){
+            $id = $this->uri->segment(3);
+    
+            $data_petugas = $this->petugas_model->read_export($id);
+    
+            //function read berfungsi mengambil/read data dari table provinsi di database
+            //load library excel
+            $this->load->library('excel');
+            $excel = $this->excel;
+    
+            //judul sheet excel
+            $excel->setActiveSheetIndex(0)->setTitle('Export Data');
+    
+            //header table
+            $excel->getActiveSheet()->setCellValue( 'A1', 'Nama Petugas');
+            $excel->getActiveSheet()->setCellValue( 'B1', 'Kode Peminjaman');
+            $excel->getActiveSheet()->setCellValue( 'C1', 'Tanggal Transaksi');
+            $excel->getActiveSheet()->setCellValue( 'D1', 'NIM');
+            $excel->getActiveSheet()->setCellValue( 'E1', 'Nama Mahasiswa');
+    
+    
+    
+            //baris awal data dimulai baris 2 (baris 1 digunakan header)
+            $baris = 2;
+    
+            foreach($data_petugas as $data) {
+    
+                //mengisi data ke excel per baris
+                $excel->getActiveSheet()->setCellValue( 'A'.$baris, $data['ptgs']);
+                $excel->getActiveSheet()->setCellValue( 'B'.$baris, $data['kode_peminjaman']);
+                $excel->getActiveSheet()->setCellValue( 'C'.$baris, $data['tanggal_pinjam']);
+                $excel->getActiveSheet()->setCellValue( 'D'.$baris, $data['NIM']);
+                $excel->getActiveSheet()->setCellValue( 'E'.$baris, $data['mhs']);
+    
+    
+                //increment baris untuk data selanjutnya
+                $baris++;
+            }
+    
+            //nama file excel
+            $filename='laporan_petugas.xls';
+    
+            //konfigurasi file excel
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
+    
         }
     }

@@ -45,6 +45,9 @@
 								<a href="<?php echo site_url('kategori_buku/delete/'.$kategori['id_kategoribuku']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
 									<i class="fas fa-trash"></i>
 								</a>
+								<a href="<?php echo site_url('kategori_buku/export_single/'.$kategori['id_kategoribuku']);?>" class="btn btn-primary btn-circle">
+									<i class="fas fa-file-export"></i>
+								</a>
 							</td>
 						</tr>
 					<?php endforeach ?>

@@ -27,7 +27,8 @@
                         <th>NIM dan Nama</th>
 						<th>Tanggal Pinjam</th>
                         <th>Jatuh Tempo</th>
-                        <th>Status</th>
+						<th>Status</th>
+                        <th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,23 +40,48 @@
 							<td><?php echo $i++; ?></td>
 							<td><?php echo $data['kode_peminjaman']; ?></td>
 							<td><?php echo $data['NIM'].' - '.$data['nama']; ?></td>
-							<td><?php echo $data['tanggal_pinjam']; ?></td>
-							<td><?php echo $data['jatuh_tempo']; ?></td>
+							<td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pinjam'])); ?></td>
+							<td><?php echo date("l, d-m-Y", strtotime($data['jatuh_tempo'])); ?></td>
 							<td>
 								<?php
 									if ($data['status'] == "N") {
-										echo "Belum dikembalikan";
+										echo "
+										<div class='btn btn-warning btn-icon-split btn-sm'>
+											<span class='icon text-white-40'>
+											<i class='fas fa-exclamation-triangle'></i>
+											</span>
+											<span class='text'>Belum dikembalikan</span>
+										</div>
+										";
 									}else if($data['status'] == "Y"){
-										echo "Sudah dikembalikan";
-									} 
-									
+										echo "
+										<div class='btn btn-primary btn-icon-split btn-sm'>
+											<span class='icon text-white-50'>
+											<i class='fas fa-check'></i>
+											</span>
+											<span class='text'>Sudah dikembalikan</span>
+										</div>
+										";
+									} 	
 								?>
+							</td>
+							<td>
+								<a href="<?php echo site_url('detail_peminjaman/read/'.$data['kode_peminjaman'])?>" class='btn btn-info btn-icon-split btn-sm'>
+									<span class='icon text-white-50'>
+									<i class='fas fa-search'></i>
+									</span>
+								</a>
 							</td>
 						</tr>
 						<?php endforeach; ?>
-						
 				</tbody>
 			</table>
+			<a href="<?php echo site_url('peminjaman/export_all');?>" class="btn btn-primary btn-icon-split">
+				<span class="icon text-white-50">
+					<i class="fas fa-download"></i>
+				</span>
+				<span class="text">Buat Laporan(Excel)</span>
+			</a>
 		</div>
 	</div>
 </div>

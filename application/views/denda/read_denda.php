@@ -43,10 +43,11 @@
 								<a href="<?php echo site_url('denda/update/'.$data['kode_denda']);?>" class="btn btn-warning btn-circle">
 									<i class="fas fa-edit"></i>
 								</a>
-	
-								<a href="<?php echo site_url('denda/delete/'.$data['kode_denda']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
+								<!--
+								<a href="<?php echo site_url('denda/delete/'.$data['kode_denda']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" id="btnDis" class="btn btn-danger btn-circle">
 									<i class="fas fa-trash"></i>
 								</a>
+								-->
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -60,5 +61,6 @@
 <script>
 	$(document).ready(function() {
 		$('#dataTable').DataTable();
+		$("#btnDis").("disabled", true);
 	});
 </script>

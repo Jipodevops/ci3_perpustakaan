@@ -13,7 +13,7 @@
 
   <!-- Nav Item - Charts -->
   <li class="nav-item active">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('dashboard');?>">
       <i class="fas fa-fw fa-chart-line"></i>
       <span>Dashboard</span></a>
   </li>
@@ -96,5 +96,9 @@
       <i class="fas fa-fw fa-sticky-note"></i>
       <span>Notifikasi</span></a>
   </li>
-
+  <hr class="sidebar-divider">
+  <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
 </ul>

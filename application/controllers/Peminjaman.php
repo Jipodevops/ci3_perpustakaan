@@ -3,6 +3,10 @@
         public function __construct(){
             parent::__construct();
 
+            if(empty($this->session->userdata('id_petugas'))) {
+                redirect('login');
+            }
+
             $this->load->model(array('peminjaman_model', 'mahasiswa_m', 'buku_model', 'tmp_model', 'detailpeminjaman_model'));
         }
 
@@ -24,7 +28,10 @@
         public function insert(){
             $tglpinjam = date('Y-m-d');
             $noUrut = $this->peminjaman_model->Auto_PK();
-            $data_mahasiswa = $this->mahasiswa_m->read();
+            $status = $this->peminjaman_model->read();
+            
+
+            $data_mahasiswa = $this->mahasiswa_m->cekNIM();
 
             $data = array(
                 'theme_page' => 'peminjaman/insert_peminjaman',
@@ -39,6 +46,7 @@
         }
 
         public function insert_submit(){
+            $petugas = $this->session->userdata('id_petugas');
             $kd_peminjaman = $this->input->post('kd_peminjaman');
             $tgl_peminjaman = $this->input->post('tgl_peminjaman');
             $jatuh_tempo = $this->input->post('jatuh_tempo');
@@ -48,7 +56,8 @@
                 'kode_peminjaman' => $kd_peminjaman,
                 'tanggal_pinjam' => $tgl_peminjaman,
                 'jatuh_tempo' => $jatuh_tempo,
-                'NIM' => $nim
+                'NIM' => $nim,
+                'id_petugas' => $petugas
             );
             $this->peminjaman_model->insert($data);
 
@@ -132,8 +141,58 @@
             );
 
             $this->peminjaman_model->update_status($status, $kd_peminjaman);
-            
+        }
 
-            
+        public function export_all(){
+            //$id = $this->uri->segment(3);
+    
+            $data_peminjaman = $this->peminjaman_model->export();
+    
+            //function read berfungsi mengambil/read data dari table provinsi di database
+            //load library excel
+            $this->load->library('excel');
+            $excel = $this->excel;
+    
+            //judul sheet excel
+            $excel->setActiveSheetIndex(0)->setTitle('Laporan Transaksi Peminjaman');
+    
+            //header table
+            $excel->getActiveSheet()->setCellValue( 'A1', 'Kode Peminjaman');
+            $excel->getActiveSheet()->setCellValue( 'B1', 'Tanggal Transaksi');
+            $excel->getActiveSheet()->setCellValue( 'C1', 'NIM');
+            $excel->getActiveSheet()->setCellValue( 'D1', 'Nama');
+            $excel->getActiveSheet()->setCellValue( 'E1', 'Buku');
+            $excel->getActiveSheet()->setCellValue( 'F1', 'Petugas');
+    
+    
+    
+            //baris awal data dimulai baris 2 (baris 1 digunakan header)
+            $baris = 2;
+    
+            foreach($data_peminjaman as $data) {
+    
+                //mengisi data ke excel per baris
+                $excel->getActiveSheet()->setCellValue( 'A'.$baris, $data['kode_peminjaman']);
+                $excel->getActiveSheet()->setCellValue( 'B'.$baris, $data['tanggal_pinjam']);
+                $excel->getActiveSheet()->setCellValue( 'C'.$baris, $data['NIM']);
+                $excel->getActiveSheet()->setCellValue( 'D'.$baris, $data['mhs']);
+                $excel->getActiveSheet()->setCellValue( 'E'.$baris, $data['judul']);
+                $excel->getActiveSheet()->setCellValue( 'F'.$baris, $data['ptgs']);
+    
+    
+                //increment baris untuk data selanjutnya
+                $baris++;
+            }
+    
+            //nama file excel
+            $filename='laporan_transaksi_peminjaman.xls';
+    
+            //konfigurasi file excel
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
+    
         }
     }

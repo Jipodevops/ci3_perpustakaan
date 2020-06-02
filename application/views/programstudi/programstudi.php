@@ -42,9 +42,13 @@
 							<a href="<?php echo site_url('programstudi/update/'.$prodi['kode_prodi']);?>" class="btn btn-warning">
 							Ubah
 							</a>
-							|
+							
 							<a href="<?php echo site_url('programstudi/delete/'.$prodi['kode_prodi']);?>" class="btn btn-danger"  onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
 							Hapus
+							</a>
+							
+							<a href="<?php echo site_url('programstudi/export/'.$prodi['kode_prodi']);?>" class="btn btn-success">
+							Ekspor Prodi
 							</a>
 						</td>
 					</tr>

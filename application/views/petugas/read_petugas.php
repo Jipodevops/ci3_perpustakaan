@@ -8,7 +8,7 @@
 	<span class="icon text-white-50">
 		<i class="fas fa-plus-circle"></i>
 	</span>
-	<span class="text">Tambah</span>
+	<span class="text">Buat Data</span>
 </a>
 
 <!-- Spacing class -->
@@ -25,6 +25,7 @@
 						<th>#</th>
 						<th>ID Petugas</th>
 						<th>Nama</th>
+						<th>Username</th>
 						<th>Jenis Kelamin</th>
                         <th>Alamat</th>
                         <th>Nomor HP</th>
@@ -40,6 +41,7 @@
 							<td><?php echo $i++; ?></td>
 							<td><?php echo $data['id_petugas']; ?></td>
 							<td><?php echo $data['nama']; ?></td>
+							<td><?php echo $data['username']; ?></td>
 							<td><?php echo $data['jenis_kelamin']; ?></td>
                             <td><?php echo $data['alamat']; ?></td>
                             <td><?php echo $data['no_telepon']; ?></td>

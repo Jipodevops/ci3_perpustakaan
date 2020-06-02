@@ -89,8 +89,8 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        //$("#cardBuku").hide();
-          $("#btnProses").hide();
+        $("#cardBuku").hide();
+        $("#btnProses").hide();
         //fungsi untuk mencari nim
         $("#nim").change(function() {
             var nim = $("#nim").val();
@@ -131,6 +131,7 @@
                         $("#colSimpan").hide();
                         $("#cardBuku").show();
                         $("#nim").prop("disabled", true);
+                        $("#cardBuku").show();
 
                     }
                 })
@@ -182,12 +183,12 @@
             var judul = $("#nama_buku").val();
             var pengarang = $("#pengarang").val();
 
-            var jumlah_buku = parseInt($("#jumlah_buku").val(), 4);
+            var jumlah_buku = parseInt($("#jumlah_buku").val(), 10);
 
             if(nim == ""){
                 alert("NIM harus diisi.");
                 return false;
-            }else if ((kode_buku == "")) {
+            }else if (kode_buku == "") {
                 alert("Kode Buku masih kosong.");
                 return false;
             }else if(jumlah_buku >= 4){

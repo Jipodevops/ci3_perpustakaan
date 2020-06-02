@@ -3,19 +3,12 @@
 
 <div class="my-2"></div>
 
-<!-- button tambah data mahasiswa -->
-<a href="<?php echo site_url('notifikasi/insert');?>" class="btn btn-success btn-icon-split">
-	<span class="icon text-white-50">
-		<i class="fas fa-plus-circle"></i>
-	</span>
-	<span class="text">Tambah</span>
-</a>
 
 <!-- Spacing class -->
 <div class="my-2"></div>
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Daftar Notifikasi</h6>
+		<h6 class="m-0 font-weight-bold text-primary">SMS Notifikasi</h6>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">

@@ -34,6 +34,11 @@
 					<td><input type="text" value="<?php echo $data_petugas['no_telepon']; ?>" name="no_hp" class="form-control" required=""></td>
 				</tr>
 				<tr>
+					<td>Username</td>
+					<td><input type="text" name="username" value="<?php echo $data_petugas['username']; ?>" class="form-control" required=""></td>
+                    </td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td><button type="submit" class="btn btn-success" onclick="return confirm('Data akan diubah ?')" name="submit">Simpan Perubahan</button></td>
 				</tr>

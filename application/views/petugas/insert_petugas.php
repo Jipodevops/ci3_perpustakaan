@@ -31,6 +31,16 @@
 					<td><input type="text" placeholder="masukkan nomor hp" name="no_hp" class="form-control" required=""></td>
 				</tr>
 				<tr>
+					<td>Username</td>
+					<td>
+					<td><input type="text" name="username" class="form-control" required=""></td>
+                    </td>
+				</tr>
+                <tr>
+					<td>Password</td>
+					<td><input type="password" name="psw" class="form-control" required=""></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td><button type="submit" class="btn btn-success" name="submit">Simpan</button></td>
 				</tr>

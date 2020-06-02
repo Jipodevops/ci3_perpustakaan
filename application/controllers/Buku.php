@@ -3,6 +3,10 @@
         public function __construct(){
             parent::__construct();
 
+            if(empty($this->session->userdata('id_petugas'))) {
+                redirect('login');
+            }
+
             $this->load->model(array('buku_model', 'kategoribuku_model', 'rakbuku_model'));
         }
 

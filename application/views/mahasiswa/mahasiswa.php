@@ -8,8 +8,16 @@
 	<span class="icon text-white-50">
 		<i class="fas fa-plus-circle"></i>
 	</span>
-	<span class="text">Tambah</span>
+	<span class="text">Buat Data</span>
 </a>
+
+<a href="<?php echo site_url('mahasiswa/export_all');?>" class="btn btn-primary btn-icon-split">
+	<span class="icon text-white-50">
+		<i class="fas fa-download"></i>
+	</span>
+	<span class="text">Cetak/Ekspor</span>
+</a>
+
 
 <!-- Spacing class -->
 <div class="my-2"></div>
