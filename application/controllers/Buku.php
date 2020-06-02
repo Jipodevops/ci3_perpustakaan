@@ -154,13 +154,18 @@
                     //memanggil function insert pada buku model
                     //function insert berfungsi menyimpan/create data ke table buku di database
                     $data_buku = $this->buku_model->update($data, $id);
+                    if ($data_buku) {
+                        $oldImg=$this->input->post('old');
+                        unlink('./upload_folder/'.$oldImg);
+                    }
+                    
     
                     //mengembalikan halaman ke function read
                     redirect('buku');
                    }
                //kondisi bila tidak terdapat pada gambar
             }else{
-                    $image_name=$this->input->post('old');
+                    
                     //mengembalikan halaman ke function read
                     redirect('buku');
             }
@@ -169,6 +174,12 @@
 
         public function delete(){
             $id = $this->uri->segment(3);
+
+            $data_buku = $this->buku_model->rowRead($id);
+            
+            $oldImg = $data_buku['foto_sampul'];
+            unlink('./upload_folder/'.$oldImg);
+
 
             $data_kota = $this->buku_model->delete($id);
             redirect('buku');

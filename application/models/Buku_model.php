@@ -50,4 +50,10 @@ class Buku_model extends CI_Model {
 		$this->db->where('id_buku', $id);
 		return $this->db->delete('buku');
 	}
+
+	public function cariBuku(){
+		$this->db->select('*');
+        $this->db->limit(10);
+        return $this->db->get('buku')->result_array();
+	}
 }

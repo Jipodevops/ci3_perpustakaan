@@ -27,6 +27,11 @@ class Mahasiswa_m extends CI_Model {
 		return $this->db->insert('mahasiswa', $data);
 	}
 
+	public function searchNIM($NIM){
+		$this->db->where("NIM", $NIM);
+        return $this->db->get("mahasiswa")->row_array();
+	}
+
 	public function update($input, $id) {
 		$this->db->where('NIM', $id);
 

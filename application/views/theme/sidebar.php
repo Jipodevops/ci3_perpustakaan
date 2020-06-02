@@ -33,14 +33,14 @@
 
   <!-- Nav Item - Charts -->
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('programstudi');?>">
       <i class="fas fa-fw fa-graduation-cap"></i>
       <span>Program Studi</span></a>
   </li>
 
    <!-- Nav Item - Charts -->
    <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('fakultas');?>">
       <i class="fas fa-fw fa-university"></i>
       <span>Fakultas</span></a>
   </li>
@@ -61,38 +61,38 @@
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <a class="collapse-item" href="<?php echo site_url('buku');?>">Koleksi Buku</a>
-        <a class="collapse-item" href="<?php echo site_url('');?>">Kategori Buku</a>
-        <a class="collapse-item" href="<?php echo site_url('');?>">Rak Buku</a>
+        <a class="collapse-item" href="<?php echo site_url('kategori_buku');?>">Kategori Buku</a>
+        <a class="collapse-item" href="<?php echo site_url('rakbuku');?>">Rak Buku</a>
       </div>
     </div>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('peminjaman');?>">
       <i class="fas fa-fw fa-folder-open"></i>
       <span>Peminjaman</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('pengembalian');?>">
       <i class="fas fa-fw fa-folder-open"></i>
       <span>Pengembalian</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('petugas');?>">
       <i class="fas fa-fw fa-user"></i>
       <span>Petugas</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('denda');?>">
       <i class="fas fa-fw fa-receipt"></i>
       <span>Denda</span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="<?php echo site_url('');?>">
+    <a class="nav-link" href="<?php echo site_url('notifikasi');?>">
       <i class="fas fa-fw fa-sticky-note"></i>
       <span>Notifikasi</span></a>
   </li>

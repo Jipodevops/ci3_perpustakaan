@@ -16,6 +16,7 @@
   <link href="<?php echo base_url('assets/css/sb-admin-2.min.css');?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/custom.css');?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/vendor/bootstrap/scss/_dataTables.scss');?>" rel="stylesheet">
+  <link href="<?php echo base_url('assets/vendor/bootstrap/scss/_modal.scss');?>" rel="stylesheet">
   
 
   <!-- js untuk pie chart -->
@@ -28,6 +29,7 @@
   <!-- js yang digunakan theme -->
   <script src="<?php echo base_url('assets/vendor/jquery/jquery.min.js');?>"></script>
   <script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
+  <script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js');?>"></script>
   <script src="<?php echo base_url('assets/vendor/jquery-easing/jquery.easing.min.js');?>"></script>
   <script src="<?php echo base_url('assets/vendor/jquery/jquery.dataTables.min.js');?>"></script>
   <script src="<?php echo base_url('assets/vendor/jquery/dataTables.bootstrap4.min.js');?>"></script>
