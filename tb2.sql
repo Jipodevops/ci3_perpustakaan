@@ -44,12 +44,6 @@ CREATE TABLE `buku` (
 -- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `buku` (`id_buku`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `jumlah`, `id_kategoribuku`, `kode_rak`, `foto_sampul`) VALUES
-(9, 'Mobile Programing', 'Jodikal Pomalingo', 'Jipodevops', '2020', 200, 1, 3, 'Database_Aggregations.PNG'),
-(10, 'Java Programming', 'Jipo', 'Jodi', '2018', 200, 1, 3, '16R_1.jpg'),
-(11, 'Java', 'eyey', 'reyeye', '2020', 6546, 1, 3, 'Double_E2.jpg'),
-(12, 'Jopi', 'asas', 'dfdf', '2020', 12, 2, 3, 'Double_E1.jpg'),
-(13, 'rtew', 'retyrty', 'yrty', '2021', 111, 5, 3, 'Baliho_Lapak.jpg');
 
 -- --------------------------------------------------------
 
