@@ -28,6 +28,7 @@
                         <th>Kode Peminjaman</th>
                         <th>NIM dan Nama</th>
 						<th>Tanggal Peminjaman</th>
+						<th>Keterangan Denda</th>
                         <th>Nominal Denda</th>
 					</tr>
 				</thead>
@@ -43,6 +44,7 @@
                             <td><?php echo $data['kode_peminjaman'] ?></td>
                             <td><?php echo $data['NIM'].' - '.$data['nama'] ?></td>
                             <td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pengembalian'])) ?></td>
+							<td><?php echo $data['keterangan'] ?></td>
                             <td><?php echo 'Rp.'.number_format($data['total_denda']) ?></td>
                         </tr>
                     <?php endforeach; ?>

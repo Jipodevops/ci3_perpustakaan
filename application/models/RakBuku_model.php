@@ -36,4 +36,13 @@ class RakBuku_model extends CI_Model {
 		return $this->db->delete('rak_buku');
 	}
 
+	public function export($id){
+		$this->db->select('*');
+		$this->db->from('rak_buku');
+		$this->db->join('buku', 'rak_buku.kode_rak= buku.kode_rak');
+		$this->db->join('kategori_buku', 'kategori_buku.id_kategoribuku = buku.id_kategoribuku');
+		$this->db->where('buku.kode_rak', $id);
+		return $this->db->get()->result_array();
+	}
+
 }

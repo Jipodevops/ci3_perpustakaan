@@ -62,4 +62,23 @@ class Mahasiswa_m extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function grafikProdi(){
+		$this->db->select('*, count(NIM) as countNIM');
+		$this->db->from('mahasiswa');
+		$this->db->join('prodi', 'prodi.kode_prodi=mahasiswa.kode_prodi');
+		$this->db->group_by('prodi.kode_prodi');
+
+		return $this->db->get()->result_array();
+	}
+
+	public function grafikFakultas(){
+		$this->db->select('*, count(mahasiswa.NIM) as countNIM');
+		$this->db->from('mahasiswa');
+		$this->db->join('prodi', 'prodi.kode_prodi=mahasiswa.kode_prodi');
+		$this->db->join('fakultas', 'prodi.kode_fakultas=prodi.kode_fakultas');
+		$this->db->group_by('prodi.kode_fakultas');
+
+		return $this->db->get()->result_array();
+	}
 }

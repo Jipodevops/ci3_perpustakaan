@@ -30,6 +30,11 @@ class Peminjaman_model extends CI_Model{
         return $this->db->insert('peminjaman', $data);
     }
 
+    public function delete($id){
+        $this->db->where('kode_peminjaman', $id);
+        return $this->db->delete('peminjaman');
+    }
+
     public function rowRead($id){
         $this->db->where('kode_peminjaman', $id);
         return $this->db->get('peminjaman')->row_array();

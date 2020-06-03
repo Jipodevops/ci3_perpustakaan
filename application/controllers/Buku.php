@@ -141,6 +141,9 @@
                 }else{
                     $upload_data=$this->upload->data();
                     $image_name=$upload_data['file_name'];
+                    $oldImg=$this->input->post('old');
+
+
     
                     //mengirim data ke model
                     $data = array(
@@ -168,10 +171,6 @@
                     redirect('buku');
                    }
                //kondisi bila tidak terdapat pada gambar
-            }else{
-                    
-                    //mengembalikan halaman ke function read
-                    redirect('buku');
             }
 
         }
@@ -187,5 +186,56 @@
 
             $data_kota = $this->buku_model->delete($id);
             redirect('buku');
+        }
+
+        public function export(){
+            $data_buku = $this->buku_model->export_all();
+                
+                //load library excel
+                $this->load->library('excel');
+                $excel = $this->excel;
+        
+                //judul sheet excel
+                $excel->setActiveSheetIndex(0)->setTitle('Export Data');
+        
+                //header table
+                $excel->getActiveSheet()->setCellValue( 'A1', 'Kode Buku');
+                $excel->getActiveSheet()->setCellValue( 'B1', 'Judul');
+                $excel->getActiveSheet()->setCellValue( 'C1', 'Penulis');
+                $excel->getActiveSheet()->setCellValue( 'D1', 'Penerbit');
+                $excel->getActiveSheet()->setCellValue( 'E1', 'Tahun Terbit');
+                $excel->getActiveSheet()->setCellValue( 'F1', 'Jumlah');
+                $excel->getActiveSheet()->setCellValue( 'G1', 'Kategori');
+                $excel->getActiveSheet()->setCellValue( 'H1', 'Rak Buku');
+        
+                //baris awal data dimulai baris 2 (baris 1 digunakan header)
+                $baris = 2;
+        
+                foreach($data_buku as $data) {
+        
+                    //mengisi data ke excel per baris
+                    $excel->getActiveSheet()->setCellValue( 'A'.$baris, $data['id_buku']);
+                    $excel->getActiveSheet()->setCellValue( 'B'.$baris, $data['judul']);
+                    $excel->getActiveSheet()->setCellValue( 'C'.$baris, $data['penulis']);
+                    $excel->getActiveSheet()->setCellValue( 'D'.$baris, $data['penerbit']);
+                    $excel->getActiveSheet()->setCellValue( 'E'.$baris, $data['tahun_terbit']);
+                    $excel->getActiveSheet()->setCellValue( 'F'.$baris, $data['jumlah']);
+                    $excel->getActiveSheet()->setCellValue( 'G'.$baris, $data['kategori_buku']);
+                    $excel->getActiveSheet()->setCellValue( 'H'.$baris, $data['kode_rak'].' - '.$data['lokasi']);
+        
+        
+                    //increment baris untuk data selanjutnya
+                    $baris++;
+                }
+        
+                //nama file excel
+                $filename='export_semua_daftar_buku.xls';
+        
+                //konfigurasi file excel
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+                $objWriter->save('php://output');
         }
     }

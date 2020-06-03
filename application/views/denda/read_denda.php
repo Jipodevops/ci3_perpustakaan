@@ -56,11 +56,70 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col-xl-12 col-lg-12">
+		<div class="card shadow mb-4">
+			<!-- Card Header - Dropdown -->
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Grafik Denda</h6>
+			</div>
+			<!-- Card Body -->
+			<div class="card-body">
+				<div id="pieDenda"></div>
+			</div>
+		</div>
+	</div>
+</div>
 
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		$('#dataTable').DataTable();
-		$("#btnDis").("disabled", true);
+	
+
+	Highcharts.chart('pieDenda', {
+	    chart: {
+	        plotBackgroundColor: null,
+	        plotBorderWidth: null,
+	        plotShadow: false,
+	        type: 'pie'
+	    },
+	    title: {
+	        text: 'Jumlah Denda berdasarkan Pengembalian'
+	    },
+	    tooltip: {
+	        pointFormat: '{series.name}: <b>{point.y}</b>'
+	    },
+	    accessibility: {
+	        point: {
+	            valueSuffix: '%'
+	        }
+	    },
+	    plotOptions: {
+	        pie: {
+	            allowPointSelect: true,
+	            cursor: 'pointer',
+	            dataLabels: {
+	                enabled: false
+	            },
+	            showInLegend: true
+	        }
+	    },
+	    series: [{
+	        name: 'Jumlah',
+	        colorByPoint: true,
+
+	        //format data penduduk kota
+	        data: [
+	        		<?php foreach($chart as $data):?>
+	        		{
+			            name: '<?php echo $data['keterangan'];?>',
+			            y: <?php echo $data['denda'];?>
+			        },
+              <?php endforeach?>
+
+			   	]
+	    }]
 	});
+});
 </script>

@@ -13,6 +13,11 @@ class DetailPeminjaman_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
+    public function delete($id){
+        $this->db->where('kode_peminjaman', $id);
+        return $this->db->delete('detail_peminjaman');
+    }
+
     public function rowRead($id){
         $this->db->select('*');
         $this->db->from('detail_peminjaman');

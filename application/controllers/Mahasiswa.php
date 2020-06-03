@@ -12,10 +12,15 @@
 
         public function index(){
             $data_mahasiswa = $this->mahasiswa_m->read();
+            $grafikProdi = $this->mahasiswa_m->grafikProdi();
+            $grafikFakultas = $this->mahasiswa_m->grafikFakultas();
+
             $data = array(
                 'theme_page' => 'mahasiswa/mahasiswa',
                 'judul' => 'Mahasiswa',
-                'data_mahasiswa' => $data_mahasiswa
+                'data_mahasiswa' => $data_mahasiswa,
+                'grafikProdi' => $grafikProdi,
+                'grafikFakultas' => $grafikFakultas
             );
 
             $this->load->view('theme/index', $data);
@@ -106,8 +111,6 @@
         }
 
         public function export_all(){
-
-    
             $data_mahasiswa = $this->mahasiswa_m->export_all();
             
             //load library excel

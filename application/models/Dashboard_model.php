@@ -29,8 +29,10 @@ class Dashboard_model extends CI_Model{
 
     public function grafikPerBook(){
         $this->db->select('*, count(buku.id_buku) as countBook');
-        $this->db->from('detail_peminjaman, peminjaman');
+        $this->db->from('detail_peminjaman', ' peminjaman');
         $this->db->join('buku', 'detail_peminjaman.id_buku = buku.id_buku');
+        $this->db->join('peminjaman', 'detail_peminjaman.kode_peminjaman = peminjaman.kode_peminjaman');
+        $this->db->where('peminjaman.kode_peminjaman NOT IN(select kode_peminjaman from peminjaman where status= "Y")');
         $this->db->group_by('detail_peminjaman.id_buku');
         return $this->db->get()->result_array();
     }

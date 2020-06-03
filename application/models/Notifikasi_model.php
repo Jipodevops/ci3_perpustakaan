@@ -3,9 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Notifikasi_model extends CI_Model{
     
+	public function insert($data1) {
+		return $this->db->insert('notifikasi', $data1);
+	}
 	public function read() {
 		$this->db->select('*');
 		$this->db->from('notifikasi');
+		$this->db->join('mahasiswa', 'notifikasi.NIM = mahasiswa.NIM');
 
 		$query = $this->db->get();
 		return $query->result_array();
@@ -20,9 +24,7 @@ class Notifikasi_model extends CI_Model{
 	}
 
 
-	public function insert($data) {
-		return $this->db->insert('notifikasi', $data);
-	}
+	
 
 	public function update($input, $id) {
 		$this->db->where('id_notifikasi', $id);
@@ -34,5 +36,11 @@ class Notifikasi_model extends CI_Model{
 	public function delete($id) {
 		$this->db->where('id_notifikasi', $id);
 		return $this->db->delete('notifikasi');
+	}
+
+	public function delete_notifikasi($kode){
+		$this->db->where('kode_peminjaman', $kode);
+		return $this->db->delete('notifikasi');
+
 	}
 }

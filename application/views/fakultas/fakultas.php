@@ -51,6 +51,13 @@
 					<?php endforeach ?>
 				</tbody>
 			</table>
+			<!-- button export data fakultas -->
+			<a href="<?php echo site_url('fakultas/export');?>" class="btn btn-info btn-icon-split">
+				<span class="icon text-white-50">
+					<i class="fas fa-download"></i>
+				</span>
+				<span class="text">Cetak/Ekspor</span>
+			</a>
 		</div>
 	</div>
 </div>

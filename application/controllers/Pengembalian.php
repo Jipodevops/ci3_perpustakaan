@@ -8,7 +8,7 @@ class Pengembalian extends CI_Controller{
         	redirect('login');
 		}
 
-        $this->load->model(array('pengembalian_model', 'peminjaman_model', 'denda_model'));
+        $this->load->model(array('pengembalian_model', 'peminjaman_model', 'denda_model', 'notifikasi_model'));
     }
 
     public function index(){
@@ -31,7 +31,7 @@ class Pengembalian extends CI_Controller{
         $tglkembali = date('Y-m-d');
         $noUrut = $this->pengembalian_model->Auto_PK();
         $data_peminjaman = $this->pengembalian_model->kodePeminjaman();
-        $data_denda = $this->denda_model->read();
+        $data_denda = $this->denda_model->read1();
 
         $data = array(
             'judul' => 'Pengembalian',
@@ -46,18 +46,26 @@ class Pengembalian extends CI_Controller{
     }
 
     public function insert_submit(){
-        $petugas = $this->session->userdata('id_petugas');
-        $kd_pengembalian = $this->input->post('kd_pengembalian');
-        $kd_peminjaman = $this->input->post('kd_peminjaman');
-        $nim = $this->input->post('nim');
+        $petugas          = $this->session->userdata('id_petugas');
+        $kd_pengembalian  = $this->input->post('kd_pengembalian');
+        $kd_peminjaman    = $this->input->post('kd_peminjaman');
+        $nim              = $this->input->post('nim');
         $tgl_pengembalian = $this->input->post('tgl_pengembalian');
-        $denda = $this->input->post('denda');
+        $denda            = $this->input->post('denda');
         //cek kode denda lainnya yang diinput dari view
-        $kode_denda = $this->input->post('denda1');
-        $cekDenda = $this->denda_model->rowRead($kode_denda);
-        $denda1 = $cekDenda['jumlah_denda'];
+        $kode_denda       = $this->input->post('denda1');
+        $cekDenda         = $this->denda_model->rowRead($kode_denda);
+        $denda1           = $cekDenda['jumlah_denda'];
 
         $tot_denda = $denda + $denda1;
+
+        if ($denda != 0) {
+            $this->session->set_flashdata('kode_denda', '1');
+        }else if($kode_denda !=0){
+            $this->session->set_flashdata('kode_denda', $kode_denda);
+        }else if($denda == 0){
+            $this->session->set_flashdata('kode_denda', '2');
+        }
 
         $data = array(
             'kode_pengemblian' => $kd_pengembalian,
@@ -65,6 +73,7 @@ class Pengembalian extends CI_Controller{
             'kode_peminjaman' => $kd_peminjaman,
             'NIM' => $nim,
             'total_denda' => $tot_denda,
+            'kode_denda' =>$this->session->flashdata('kode_denda'),
             'id_petugas' => $petugas
         );
 
@@ -75,12 +84,13 @@ class Pengembalian extends CI_Controller{
         );
 
         $this->peminjaman_model->update_status($status, $kd_peminjaman);
+
+        $this->notifikasi_model->delete_notifikasi($kd_peminjaman);
     }
 
     public function searchKodePeminjaman(){
         $kd_peminjaman = $this->input->post('kd_peminjaman');
         $cekKode = $this->pengembalian_model->searchKode($kd_peminjaman);
-
         echo $cekKode['tanggal_pinjam']."|".$cekKode['NIM']."|".$cekKode['nama'];
     }
 

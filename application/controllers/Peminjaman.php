@@ -7,7 +7,7 @@
                 redirect('login');
             }
 
-            $this->load->model(array('peminjaman_model', 'mahasiswa_m', 'buku_model', 'tmp_model', 'detailpeminjaman_model'));
+            $this->load->model(array('peminjaman_model', 'mahasiswa_m', 'buku_model', 'tmp_model', 'detailpeminjaman_model', 'pengembalian_model', 'notifikasi_model'));
         }
 
         public function index(){
@@ -61,6 +61,25 @@
             );
             $this->peminjaman_model->insert($data);
 
+            $data1 = array(
+                'NIM' => $nim,
+                'kode_peminjaman' => $kd_peminjaman,
+                'keterangan'=> 'Peminjaman dengan kode :'.$kd_peminjaman.'<br>Jatuh tempo peminjaman buku anda sampai tanggal '.$jatuh_tempo
+            );
+
+            $this->notifikasi_model->insert($data1);
+
+        }
+
+        public function delete(){
+            $id = $this->uri->segment(3);
+
+            $this->peminjaman_model->delete($id);
+            $this->detailpeminjaman_model->delete($id);
+
+            $this->pengembalian_model->delete($id);
+
+            redirect('peminjaman');
         }
 
         //mencari nim untuk disesuaikan dengan form nama 

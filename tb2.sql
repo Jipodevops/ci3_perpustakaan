@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2020 pada 21.58
+-- Waktu pembuatan: 03 Jun 2020 pada 11.15
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.1.31
 
@@ -44,6 +44,8 @@ CREATE TABLE `buku` (
 -- Dumping data untuk tabel `buku`
 --
 
+INSERT INTO `buku` (`id_buku`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `jumlah`, `id_kategoribuku`, `kode_rak`, `foto_sampul`) VALUES
+(14, 'Reactnative', 'Jipodevops', 'Andi', '2020', 200, 1, 3, 'encryption2_and_decryption.PNG');
 
 -- --------------------------------------------------------
 
@@ -63,6 +65,7 @@ CREATE TABLE `denda` (
 
 INSERT INTO `denda` (`kode_denda`, `keterangan`, `jumlah_denda`) VALUES
 (1, 'Denda Keterlambatan', 5000),
+(2, 'Tidak ada Denda', 0),
 (3, 'Rusak sebagian', 20000),
 (5, 'Hilang', 100000);
 
@@ -76,6 +79,14 @@ CREATE TABLE `detail_peminjaman` (
   `kode_peminjaman` int(50) NOT NULL,
   `id_buku` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `detail_peminjaman`
+--
+
+INSERT INTO `detail_peminjaman` (`kode_peminjaman`, `id_buku`) VALUES
+(200603001, 14),
+(200603002, 14);
 
 -- --------------------------------------------------------
 
@@ -154,6 +165,13 @@ CREATE TABLE `notifikasi` (
   `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `notifikasi`
+--
+
+INSERT INTO `notifikasi` (`id_notifikasi`, `NIM`, `kode_peminjaman`, `keterangan`) VALUES
+(6, '41518010033', 200603002, 'Peminjaman dengan kode :200603002<br>Jatuh tempo peminjaman buku anda sampai tanggal 2020-06-07');
+
 -- --------------------------------------------------------
 
 --
@@ -168,6 +186,14 @@ CREATE TABLE `peminjaman` (
   `status` enum('Y','N') DEFAULT NULL,
   `id_petugas` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `peminjaman`
+--
+
+INSERT INTO `peminjaman` (`kode_peminjaman`, `tanggal_pinjam`, `jatuh_tempo`, `NIM`, `status`, `id_petugas`) VALUES
+(200603001, '2020-06-03', '2020-06-07', '41518010033', 'Y', 1),
+(200603002, '2020-06-03', '2020-06-07', '41518010033', 'N', 1);
 
 -- --------------------------------------------------------
 
@@ -184,6 +210,13 @@ CREATE TABLE `pengembalian` (
   `total_denda` int(15) DEFAULT NULL,
   `id_petugas` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pengembalian`
+--
+
+INSERT INTO `pengembalian` (`kode_pengemblian`, `tanggal_pengembalian`, `kode_peminjaman`, `NIM`, `kode_denda`, `total_denda`, `id_petugas`) VALUES
+(200603001, '2020-06-03', 200603001, '41518010033', 3, 20000, 1);
 
 -- --------------------------------------------------------
 
@@ -355,13 +388,13 @@ ALTER TABLE `rak_buku`
 -- AUTO_INCREMENT untuk tabel `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `id_buku` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_buku` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `denda`
 --
 ALTER TABLE `denda`
-  MODIFY `kode_denda` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `kode_denda` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `fakultas`
@@ -374,6 +407,12 @@ ALTER TABLE `fakultas`
 --
 ALTER TABLE `kategori_buku`
   MODIFY `id_kategoribuku` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `notifikasi`
+--
+ALTER TABLE `notifikasi`
+  MODIFY `id_notifikasi` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `petugas`

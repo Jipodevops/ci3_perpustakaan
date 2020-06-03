@@ -7,7 +7,9 @@ class Pengembalian_model extends CI_Model{
         $this->db->from('pengembalian');
         $this->db->join('peminjaman', 'pengembalian.kode_peminjaman = peminjaman.kode_peminjaman');
         $this->db->join('mahasiswa', 'pengembalian.NIM = mahasiswa.NIM');
+        $this->db->join('denda', 'denda.kode_denda = pengembalian.kode_denda');
         $this->db->order_by('pengembalian.tanggal_pengembalian');
+
         return $this->db->get()->result_array();
     }
 
@@ -57,6 +59,11 @@ class Pengembalian_model extends CI_Model{
         $this->db->where('detail_peminjaman.kode_peminjaman NOT IN(SELECT kode_peminjaman FROM pengembalian)');
 
         return $this->db->get()->result_array();
+    }
+
+    public function delete($id){
+        $this->db->where('kode_peminjaman', $id);
+        return $this->db->delete('pengembalian');
     }
 
 }

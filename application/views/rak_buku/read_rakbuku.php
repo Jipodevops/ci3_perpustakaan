@@ -47,11 +47,15 @@
 								<a href="<?php echo site_url('rakbuku/delete/'.$rak['kode_rak']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
 									<i class="fas fa-trash"></i>
 								</a>
+								<a href="<?php echo site_url('rakbuku/export/'.$rak['kode_rak']);?>" class="btn btn-primary btn-circle">
+									<i class="fas fa-download"></i>
+								</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
 				</tbody>
 			</table>
+		
 		</div>
 	</div>
 </div>

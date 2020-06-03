@@ -17,8 +17,10 @@
 					<tr>
 						<th>#</th>
 						<th>NIM</th>
+						<th>Nama</th>
+						<th>No. HP</th>
 						<th>Kode Peminjaman</th>
-						<th>Keterangan</th>
+						<th>Pesan</th>
                         <th>Opsi</th>
 					</tr>
 				</thead>
@@ -30,6 +32,8 @@
 						<tr>
 							<td><?php echo $i++; ?></td>
 							<td><?php echo $data['NIM']; ?></td>
+							<td><?php echo $data['nama']; ?></td>
+							<td><?php echo $data['no_telepon']; ?></td>
 							<td><?php echo $data['kode_peminjaman']; ?></td>
 							<td><?php echo $data['keterangan']; ?></td>
 							<td>

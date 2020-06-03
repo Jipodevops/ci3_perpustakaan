@@ -16,10 +16,12 @@
 
         private function read(){
             $data_denda = $this->denda_model->read();
+            $chart = $this->denda_model->chart();
             $data = array(
                 'theme_page' => 'denda/read_denda',
                 'judul' => 'Denda',
-                'data_denda' => $data_denda
+                'data_denda' => $data_denda,
+                'chart' => $chart
             );
 
             $this->load->view('theme/index', $data);

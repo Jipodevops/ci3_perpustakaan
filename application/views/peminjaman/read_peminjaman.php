@@ -71,6 +71,12 @@
 									<i class='fas fa-search'></i>
 									</span>
 								</a>
+								&nbsp;
+								<a href="<?php echo site_url('peminjaman/delete/'.$data['kode_peminjaman'])?>" onclick="return confirm('Yakin akan menghapus data ini ?')" class='btn btn-danger btn-icon-split btn-sm'>
+									<span class='icon text-white-50'>
+									<i class='fas fa-trash'></i>
+									</span>
+								</a>
 							</td>
 						</tr>
 						<?php endforeach; ?>

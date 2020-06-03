@@ -72,7 +72,7 @@
                 <tr>
 					<td>Foto Sampul</td>
                     <td>
-                       <input type="file" name="foto_sampul" class="form-control-file" size="20" required="">
+                       <input type="file" name="foto_sampul" class="form-control-file" size="20">
                         <?php if(!empty($response)):?>
                             <?php echo $response;?>
                         <?php endif;?>

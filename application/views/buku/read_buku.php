@@ -69,6 +69,13 @@
                     ?>
 				</tbody>
 			</table>
+            <!-- button export data buku -->
+			<a href="<?php echo site_url('buku/export');?>" class="btn btn-info btn-icon-split">
+				<span class="icon text-white-50">
+					<i class="fas fa-download"></i>
+				</span>
+				<span class="text">Cetak/Ekspor</span>
+			</a>
 		</div>
 	</div>
 </div>

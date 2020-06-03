@@ -30,4 +30,14 @@ class Fakultas_model extends CI_Model{
         $this->db->where('kode_fakultas', $id);
         return $this->db->update('fakultas', $data);
     }
+
+    public function export_all(){
+        $this->db->select('*');
+        $this->db->from('fakultas');
+        $this->db->join('prodi', 'fakultas.kode_fakultas = prodi.kode_fakultas');
+        $this->db->join('mahasiswa', 'mahasiswa.kode_prodi = prodi.kode_prodi');
+        $this->db->order_by('fakultas.kode_fakultas');
+
+        return $this->db->get()->result_array();
+    }
 }

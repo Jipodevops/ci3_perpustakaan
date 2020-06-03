@@ -57,4 +57,14 @@ class Buku_model extends CI_Model {
 		$this->db->where('buku.id_buku NOT IN(SELECT id_buku from tmp)');
         return $this->db->get()->result_array();
 	}
+
+	public function export_all(){
+		$this->db->select('*');
+		$this->db->from('buku');
+        $this->db->join('kategori_buku', 'buku.id_kategoribuku = kategori_buku.id_kategoribuku');
+        $this->db->join('rak_buku', 'buku.kode_rak = rak_buku.kode_rak');
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
