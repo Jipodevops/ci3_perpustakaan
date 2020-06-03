@@ -21,7 +21,6 @@
 						<th>No. HP</th>
 						<th>Kode Peminjaman</th>
 						<th>Pesan</th>
-                        <th>Opsi</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,15 +35,6 @@
 							<td><?php echo $data['no_telepon']; ?></td>
 							<td><?php echo $data['kode_peminjaman']; ?></td>
 							<td><?php echo $data['keterangan']; ?></td>
-							<td>
-								<a href="<?php echo site_url('notifikasi/update/'.$data['id_notifikasi']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-	
-								<a href="<?php echo site_url('notifikasi/delete/'.$data['id_notifikasi']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-							</td>
 						</tr>
 					<?php endforeach ?>
 				</tbody>
