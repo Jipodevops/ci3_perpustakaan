@@ -40,8 +40,8 @@
             $alamat = $this->input->post('alamat');
             $no_hp = $this->input->post('no_hp');
 
-            $username = $this->input->poat('username');
-            $psw = $this->input->poat('psw');
+            $username = $this->input->post('username');
+            $psw = $this->input->post('psw');
 
             $pswenc = $this->encryption->encrypt($psw);
 
