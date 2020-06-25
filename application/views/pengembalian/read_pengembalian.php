@@ -24,10 +24,10 @@
 					<tr>
 						<th>#</th>
 						<th>Kode Pengembalian</th>
-						<th>Tanggal Pengembalian</th>
+						<th>Tanggal Peminjaman</th>
                         <th>Kode Peminjaman</th>
                         <th>NIM dan Nama</th>
-						<th>Tanggal Peminjaman</th>
+						<th>Tanggal Pengembalian</th>
 						<th>Keterangan Denda</th>
                         <th>Nominal Denda</th>
 					</tr>
