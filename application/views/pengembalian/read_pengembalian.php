@@ -33,21 +33,6 @@
 					</tr>
 				</thead>
 				<tbody>
-                    <?php 
-                        $i = 1;
-                        foreach ($data_pengembalian as $data):
-                    ?>
-                        <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $data['kode_pengemblian'] ?></td>
-							<td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pinjam'])) ?></td>
-                            <td><?php echo $data['kode_peminjaman'] ?></td>
-                            <td><?php echo $data['NIM'].' - '.$data['nama'] ?></td>
-                            <td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pengembalian'])) ?></td>
-							<td><?php echo $data['keterangan'] ?></td>
-                            <td><?php echo 'Rp.'.number_format($data['total_denda']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
 				</tbody>
 			</table>
 			
@@ -58,6 +43,21 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('pengembalian/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>
+

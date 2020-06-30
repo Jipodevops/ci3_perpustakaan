@@ -36,37 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-                    <?php
-                        $i = 1;
 
-                        foreach($data_buku as $buku){
-                    ?>
-                                <tr>
-                                    <td><?php echo $i++; ?></td>
-                                    <td><?php echo $buku['id_buku'];?></td>
-                                    <td><?php echo $buku['judul'];?></td>
-                                    <td><?php echo $buku['penulis'];?></td>
-                                    <td><?php echo $buku['penerbit'];?></td>
-                                    <td><?php echo $buku['tahun_terbit'];?></td>
-                                    <td><?php echo $buku['jumlah'];?></td>
-                                    <td><?php echo $buku['kategori_buku'];?></td>
-                                    <td><?php echo 'Rak '.$buku['kode_rak'].' - '.$buku['kategori'];?></td>
-                                    <td>
-                                        <img height="50" alt="" class="zoom" src="<?php echo site_url('../upload_folder/'.$buku['foto_sampul']);?>" style="width:50px;">  
-                                    </td>
-                                    <td>
-                                        <a href="<?php echo site_url('buku/update/'.$buku['id_buku']); ?>" class="btn btn-warning btn-circle">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-            
-                                        <a href="<?php echo site_url('buku/delete/'.$buku['id_buku']); ?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                    <?php
-                        }
-                    ?>
 				</tbody>
 			</table>
             <!-- button export data buku -->
@@ -83,6 +53,21 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('buku/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>
+

@@ -11,20 +11,63 @@
         }
 
         public function index(){
-            $data_mahasiswa = $this->mahasiswa_m->read();
             $grafikProdi = $this->mahasiswa_m->grafikProdi();
             $grafikFakultas = $this->mahasiswa_m->grafikFakultas();
 
             $data = array(
                 'theme_page' => 'mahasiswa/mahasiswa',
                 'judul' => 'Mahasiswa',
-                'data_mahasiswa' => $data_mahasiswa,
                 'grafikProdi' => $grafikProdi,
                 'grafikFakultas' => $grafikFakultas
             );
 
             $this->load->view('theme/index', $data);
         }
+
+        //fungsi menampilkan data dalam bentuk json
+	public function datatables() {
+        //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+        //sleep(3000);
+
+        //memanggil fungsi model datatables
+        $list = $this->mahasiswa_m->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+
+        //mencetak data json
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field['NIM'];
+            $row[] = $field['nama'];
+            $row[] = $field['jenis_kelamin'];
+            $row[] = $field['alamat'];
+            $row[] = $field['no_telepon'];
+            $row[] = $field['agama'];
+            $row[] = $field['nama_prodi'];
+            $row[] = $field['status_mahasiswa'];
+            $row[] = '<a href="'.site_url('mahasiswa/update/'.$field['NIM']).'" class="btn btn-warning btn-circle">
+            <i class="fas fa-edit"></i>
+            </a>
+            <a href="'.site_url('mahasiswa/delete/'.$field['NIM']).'" onclick="return confirm("Apakah anda yakin akan menghapus data ini?")" class="btn btn-danger btn-circle">
+            <i class="fas fa-trash"></i>
+            </a>';
+
+            $data[] = $row;
+        }
+    
+        //mengirim data json
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->mahasiswa_m->count_all(),
+            "recordsFiltered" => $this->mahasiswa_m->count_filtered(),
+            "data" => $data,
+        );
+
+        //output dalam format JSON
+        echo json_encode($output);
+    }
 
         public function insert(){
             $data_prodi = $this->programstudi_model->read();

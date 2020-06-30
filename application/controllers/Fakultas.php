@@ -17,14 +17,50 @@ class Fakultas extends CI_Controller{
     }
 
     public function read(){
-        $data_fakultas = $this->fakultas_model->read();
             $data = array(
                 'theme_page' => 'fakultas/fakultas',
                 'judul' => 'Fakultas',
-                'data_fakultas' => $data_fakultas
             );
 
             $this->load->view('theme/index', $data);
+    }
+
+    public function datatables() {
+        //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+        //sleep(3000);
+
+        //memanggil fungsi model datatables
+        $list = $this->fakultas_model->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+
+        //mencetak data json
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field['kode_fakultas'];
+            $row[] = $field['nama_fakultas'];
+            $row[] = '<a href="'.site_url('fakultas/update/'.$field['kode_fakultas']).'" class="btn btn-warning btn-circle">
+            <i class="fas fa-edit"></i>
+            </a>
+            <a href="'.site_url('fakultas/delete/'.$field['kode_fakultas']).'" onclick="return confirm("Apakah anda yakin akan menghapus data ini?")" class="btn btn-danger btn-circle">
+            <i class="fas fa-trash"></i>
+            </a>
+            ';
+
+            $data[] = $row;
+        }
+         //mengirim data json
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->fakultas_model->count_all(),
+            "recordsFiltered" => $this->fakultas_model->count_filtered(),
+            "data" => $data,
+        );
+
+        //output dalam format JSON
+        echo json_encode($output);
     }
 
     public function insert(){

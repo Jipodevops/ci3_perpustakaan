@@ -78,6 +78,21 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Grafik Peminjaman</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div id="grafikPeminjaman"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Area Chart -->
+            <div class="col-xl-12 col-lg-12">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Koleksi Buku</h6>
                 </div>
                 <!-- Card Body -->
@@ -117,6 +132,50 @@
           </div>
 
 <script type="text/javascript">
+    Highcharts.chart('grafikPeminjaman', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Perbandingan Transaksi Peminjaman berdasarkan Tanggal'
+        },
+        xAxis: {
+            categories: [
+                'Tanggal'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Jumlah (transaksi peminjaman)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+
+                <?php foreach($grafikPeminjamanperTanggal as $data):?>
+                        {
+                            name  : '<?php echo date("l, d", strtotime($data['tanggal_pinjam']));?>',
+                            data  : [<?php echo $data['countPeminjaman'];?>]
+                        },
+                        <?php endforeach?>
+        ]
+    });
+
     Highcharts.chart('grafikKoleksi', {
         chart: {
             type: 'column'

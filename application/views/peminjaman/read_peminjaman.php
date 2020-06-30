@@ -32,54 +32,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-						$i = 1;
-						foreach ($data_peminjaman as $data):
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $data['kode_peminjaman']; ?></td>
-							<td><?php echo $data['NIM'].' - '.$data['nama']; ?></td>
-							<td><?php echo date("l, d-m-Y", strtotime($data['tanggal_pinjam'])); ?></td>
-							<td><?php echo date("l, d-m-Y", strtotime($data['jatuh_tempo'])); ?></td>
-							<td>
-								<?php
-									if ($data['status'] == "N") {
-										echo "
-										<div class='btn btn-warning btn-icon-split btn-sm'>
-											<span class='icon text-white-40'>
-											<i class='fas fa-exclamation-triangle'></i>
-											</span>
-											<span class='text'>Belum dikembalikan</span>
-										</div>
-										";
-									}else if($data['status'] == "Y"){
-										echo "
-										<div class='btn btn-primary btn-icon-split btn-sm'>
-											<span class='icon text-white-50'>
-											<i class='fas fa-check'></i>
-											</span>
-											<span class='text'>Sudah dikembalikan</span>
-										</div>
-										";
-									} 	
-								?>
-							</td>
-							<td>
-								<a href="<?php echo site_url('detail_peminjaman/read/'.$data['kode_peminjaman'])?>" class='btn btn-info btn-icon-split btn-sm'>
-									<span class='icon text-white-50'>
-									<i class='fas fa-search'></i>
-									</span>
-								</a>
-								&nbsp;
-								<a href="<?php echo site_url('peminjaman/delete/'.$data['kode_peminjaman'])?>" onclick="return confirm('Yakin akan menghapus data ini ?')" class='btn btn-danger btn-icon-split btn-sm'>
-									<span class='icon text-white-50'>
-									<i class='fas fa-trash'></i>
-									</span>
-								</a>
-							</td>
-						</tr>
-						<?php endforeach; ?>
+					
 				</tbody>
 			</table>
 			<a href="<?php echo site_url('peminjaman/export_all');?>" class="btn btn-primary btn-icon-split">
@@ -95,6 +48,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('Peminjaman/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

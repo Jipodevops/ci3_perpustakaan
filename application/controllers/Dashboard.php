@@ -19,6 +19,7 @@
             $grafikBuku = $this->dashboard_model->grafikBook();
             $grafikPerBook = $this->dashboard_model->grafikPerBook();
             $grafikPinjamPerProdi = $this->dashboard_model->grafikPeminjamanperProdi();
+            $grafikPeminjamanperTanggal = $this->dashboard_model->grafikPeminjamanperTanggal();
 
             $data = array(
                 'theme_page' => 'dashboard',
@@ -29,7 +30,8 @@
                 'jumBelDikembalikan' => $jumlahBelDikembalikan,
                 'grafikBuku' => $grafikBuku,
                 'grafikPerBook' => $grafikPerBook,
-                'grafikPinjamPerProdi' => $grafikPinjamPerProdi
+                'grafikPinjamPerProdi' => $grafikPinjamPerProdi,
+                'grafikPeminjamanperTanggal' => $grafikPeminjamanperTanggal
             );
 
             $this->load->view('theme/index', $data);

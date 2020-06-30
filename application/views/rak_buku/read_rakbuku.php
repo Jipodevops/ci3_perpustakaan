@@ -30,29 +30,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_rak as $rak): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $rak['kode_rak']; ?></td>
-							<td><?php echo $rak['kategori']; ?></td>
-							<td><?php echo $rak['lokasi']; ?></td>
-							<td>
-								<a href="<?php echo site_url('rakbuku/update/'.$rak['kode_rak']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-	
-								<a href="<?php echo site_url('rakbuku/delete/'.$rak['kode_rak']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-								<a href="<?php echo site_url('rakbuku/export/'.$rak['kode_rak']);?>" class="btn btn-primary btn-circle">
-									<i class="fas fa-download"></i>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		
@@ -63,6 +40,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('Rakbuku/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

@@ -12,15 +12,78 @@
 
         public function index(){
 
-            $data_peminjaman = $this->peminjaman_model->read();
+            //$data_peminjaman = $this->peminjaman_model->read();
 
             $data = array(
                 'theme_page' => 'peminjaman/read_peminjaman',
                 'judul' => 'Peminjaman',
-                'data_peminjaman' => $data_peminjaman
+               // 'data_peminjaman' => $data_peminjaman
             );
 
             $this->load->view('theme/index', $data);
+        }
+
+        public function datatables() {
+            //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+            //sleep(3000);
+    
+            //memanggil fungsi model datatables
+            $list = $this->peminjaman_model->get_datatables();
+            $data = array();
+            $no = $this->input->post('start');
+    
+            //mencetak data json
+            foreach ($list as $field) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $field['kode_peminjaman'];
+                $row[] = $field['NIM'].' - '.$field['nama'];
+                $row[] = date("l, d-m-Y", strtotime($field['tanggal_pinjam']));
+                $row[] = date("l, d-m-Y", strtotime($field['jatuh_tempo']));
+                if ($field['status'] == "N") {
+                    $row[] ='
+                            <div class="btn btn-warning btn-icon-split btn-sm">
+                                <span class="icon text-white-40">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                </span>
+                                <span class="text">Belum dikembalikan</span>
+                            </div>
+                    ';
+                }else if($field['status'] == "Y"){
+                    $row[] = '
+                            <div class="btn btn-primary btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                                </span>
+                                <span class="text">Sudah dikembalikan</span>
+                            </div>
+                    ';
+                }
+                $row[] = '<a href="'.site_url('detail_peminjaman/read/'.$field['kode_peminjaman']).'" class="btn btn-info btn-icon-split btn-sm">
+                <span class="icon text-white-50">
+                <i class="fas fa-search"></i>
+                </span>
+                </a>
+                <a href="'.site_url('peminjaman/delete/'.$field['kode_peminjaman']).'" onclick="return confirm("Apakah anda yakin akan menghapus data ini?")" class="btn btn-danger btn-icon-split btn-sm">
+                <span class="icon text-white-50">
+                <i class="fas fa-trash"></i>
+                </span>
+                </a>';
+    
+                $data[] = $row;
+            }
+        
+            //mengirim data json
+            $output = array(
+                "draw" => $this->input->post('draw'),
+                "recordsTotal" => $this->peminjaman_model->count_all(),
+                "recordsFiltered" => $this->peminjaman_model->count_filtered(),
+                "data" => $data,
+            );
+    
+            //output dalam format JSON
+            echo json_encode($output);
         }
 
        
@@ -64,7 +127,7 @@
             $data1 = array(
                 'NIM' => $nim,
                 'kode_peminjaman' => $kd_peminjaman,
-                'keterangan'=> 'Peminjaman dengan kode :'.$kd_peminjaman.'<br>Jatuh tempo peminjaman buku anda sampai tanggal '.$jatuh_tempo
+                'keterangan'=> 'Peminjaman dengan kode : '.$kd_peminjaman.'<br>Jatuh tempo peminjaman buku anda sampai tanggal '.$jatuh_tempo
             );
 
             $this->notifikasi_model->insert($data1);

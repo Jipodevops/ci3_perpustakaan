@@ -16,16 +16,50 @@
     }
 
     private function read(){
-        $data_notifikasi = $this->notifikasi_model->read();
+
         $data = array(
             'theme_page' => 'notifikasi/read_notifikasi',
             'judul' => 'Notifikasi',
-            'data_notifikasi' => $data_notifikasi
         );
 
         $this->load->view('theme/index', $data);
     }
 
+    public function datatables() {
+        //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+        //sleep(3000);
+
+        //memanggil fungsi model datatables
+        $list = $this->notifikasi_model->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+
+        //mencetak data json
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field['NIM'];
+            $row[] = $field['nama'];
+            $row[] = $field['no_telepon'];
+            $row[] = $field['kode_peminjaman'];
+            $row[] = $field['keterangan'];
+            
+            $data[] = $row;
+        }
+    
+        //mengirim data json
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->notifikasi_model->count_all(),
+            "recordsFiltered" => $this->notifikasi_model->count_filtered(),
+            "data" => $data,
+        );
+
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    
     public function insert(){
         $data_nim = $this->mahasiswa_m->read();
         $data = array(

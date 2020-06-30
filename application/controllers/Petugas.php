@@ -15,14 +15,53 @@
         }
 
         private function read(){
-            $data_petugas = $this->petugas_model->read();
             $data = array(
                 'theme_page' => 'petugas/read_petugas',
-                'judul' => 'Data Petugas',
-                'data_petugas' => $data_petugas
+                'judul' => 'Data Petugas'
             );
 
             $this->load->view('theme/index', $data);
+        }
+
+        public function datatables() {
+            //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+            //sleep(3000);
+    
+            //memanggil fungsi model datatables
+            $list = $this->petugas_model->get_datatables();
+            $data = array();
+            $no = $this->input->post('start');
+    
+            //mencetak data json
+            foreach ($list as $field) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $field['id_petugas'];
+                $row[] = $field['nama'];
+                $row[] = $field['username'];
+                $row[] = $field['jenis_kelamin'];
+                $row[] = $field['alamat'];
+                $row[] = $field['no_telepon'];
+                $row[] = '<a href="'.site_url('petugas/update/'.$field['id_petugas']).'" class="btn btn-warning btn-circle">
+                <i class="fas fa-edit"></i>
+                </a>
+                <a href="'.site_url('petugas/delete/'.$field['id_petugas']).'" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+                </a>';
+                $data[] = $row;
+            }
+        
+            //mengirim data json
+            $output = array(
+                "draw" => $this->input->post('draw'),
+                "recordsTotal" => $this->petugas_model->count_all(),
+                "recordsFiltered" => $this->petugas_model->count_filtered(),
+                "data" => $data,
+            );
+    
+            //output dalam format JSON
+            echo json_encode($output);
         }
 
         public function insert(){

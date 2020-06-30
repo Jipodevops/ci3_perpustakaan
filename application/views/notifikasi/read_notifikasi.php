@@ -24,19 +24,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_notifikasi as $data): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $data['NIM']; ?></td>
-							<td><?php echo $data['nama']; ?></td>
-							<td><?php echo $data['no_telepon']; ?></td>
-							<td><?php echo $data['kode_peminjaman']; ?></td>
-							<td><?php echo $data['keterangan']; ?></td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		</div>
@@ -46,6 +33,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('notifikasi/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

@@ -30,27 +30,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_denda as $data): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $data['kode_denda']; ?></td>
-							<td><?php echo $data['keterangan']; ?></td>
-							<td><?php echo $data['jumlah_denda']; ?></td>
-							<td>
-								<a href="<?php echo site_url('denda/update/'.$data['kode_denda']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-								<!--
-								<a href="<?php echo site_url('denda/delete/'.$data['kode_denda']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" id="btnDis" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-								-->
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		</div>
@@ -73,6 +52,24 @@
 
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('denda/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
+	});
+
 	$(document).ready(function() {
 		$('#dataTable').DataTable();
 	

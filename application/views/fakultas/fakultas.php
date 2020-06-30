@@ -29,26 +29,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_fakultas as $fakultas): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $fakultas['kode_fakultas']; ?></td>
-							<td><?php echo $fakultas['nama_fakultas']; ?></td>
-				
-							<td>
-								<a href="<?php echo site_url('fakultas/update/'.$fakultas['kode_fakultas']);?>" class="btn btn-warning btn-icon-split">
-									<span class="text">Ubah</span>
-								</a>
-								&nbsp;
-								<a href="<?php echo site_url('fakultas/delete/'.$fakultas['kode_fakultas']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-icon-split">
-									<span class="text">Hapus</span>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 			<!-- button export data fakultas -->
@@ -65,6 +45,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('fakultas/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

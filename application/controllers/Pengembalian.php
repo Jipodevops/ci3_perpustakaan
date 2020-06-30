@@ -16,15 +16,49 @@ class Pengembalian extends CI_Controller{
     }
 
     public function read(){
-        $data_pengembalian = $this->pengembalian_model->read();
  
         $data = array(
             'judul' => 'Pengembalian',
             'theme_page' => 'pengembalian/read_pengembalian',
-            'data_pengembalian' => $data_pengembalian
         );
 
         $this->load->view('theme/index', $data);
+    }
+
+    public function datatables() {
+        //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+        //sleep(3000);
+
+        //memanggil fungsi model datatables
+        $list = $this->pengembalian_model->get_datatables();
+        $data = array();
+        $no = $this->input->post('start');
+
+        //mencetak data json
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field['kode_pengemblian'];
+            $row[] = date("l, d-m-Y", strtotime($field['tanggal_pinjam']));
+            $row[] = $field['kode_peminjaman'];
+            $row[] = $field['NIM'].' - '.$field['nama'];
+            $row[] = date("l, d-m-Y", strtotime($field['tanggal_pengembalian']));
+            $row[] = $field['keterangan'];
+            $row[] = 'Rp.'.number_format($field['total_denda']);
+            $data[] = $row;
+        }
+    
+        //mengirim data json
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->pengembalian_model->count_all(),
+            "recordsFiltered" => $this->pengembalian_model->count_filtered(),
+            "data" => $data,
+        );
+
+        //output dalam format JSON
+        echo json_encode($output);
     }
 
     public function insert(){

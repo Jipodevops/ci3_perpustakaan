@@ -43,31 +43,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_mahasiswa as $mhs): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $mhs['NIM']; ?></td>
-							<td><?php echo $mhs['nama']; ?></td>
-							<td><?php echo $mhs['jenis_kelamin']; ?></td>
-							<td><?php echo $mhs['alamat']; ?></td>
-							<td><?php echo $mhs['no_telepon']; ?></td>
-							<td><?php echo $mhs['agama']; ?></td>
-							<td><?php echo $mhs['nama_prodi']; ?></td>
-							<td><?php echo $mhs['status_mahasiswa']; ?></td>
-							<td>
-								<a href="<?php echo site_url('mahasiswa/update/'.$mhs['NIM']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-	
-								<a href="<?php echo site_url('mahasiswa/delete/'.$mhs['NIM']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		</div>
@@ -78,7 +53,7 @@
 		<div class="card shadow mb-4">
 			<!-- Card Header - Dropdown -->
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Grafik Program Studi</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Grafik Fakultas</h6>
 			</div>
 			<!-- Card Body -->
 			<div class="card-body">
@@ -90,7 +65,7 @@
 		<div class="card shadow mb-4">
 			<!-- Card Header - Dropdown -->
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Grafik Fakultas</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Grafik Program Studi</h6>
 			</div>
 			<!-- Card Body -->
 			<div class="card-body">
@@ -104,8 +79,24 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('mahasiswa/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 
+
+		//grafik
 		Highcharts.chart('pieFakultas', {
 			chart: {
 				plotBackgroundColor: null,

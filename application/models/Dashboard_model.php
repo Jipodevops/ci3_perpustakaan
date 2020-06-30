@@ -45,4 +45,11 @@ class Dashboard_model extends CI_Model{
         $this->db->group_by('mahasiswa.kode_prodi');
         return $this->db->get()->result_array();
     }
+
+    public function grafikPeminjamanperTanggal(){
+        $this->db->select('*, count(peminjaman.kode_peminjaman) as countPeminjaman');
+        $this->db->from('peminjaman');
+        $this->db->group_by('peminjaman.tanggal_pinjam');
+        return $this->db->get()->result_array();
+    }
 }

@@ -33,29 +33,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_petugas as $data): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $data['id_petugas']; ?></td>
-							<td><?php echo $data['nama']; ?></td>
-							<td><?php echo $data['username']; ?></td>
-							<td><?php echo $data['jenis_kelamin']; ?></td>
-                            <td><?php echo $data['alamat']; ?></td>
-                            <td><?php echo $data['no_telepon']; ?></td>
-							<td>
-								<a href="<?php echo site_url('petugas/update/'.$data['id_petugas']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-	
-								<a href="<?php echo site_url('petugas/delete/'.$data['id_petugas']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		</div>
@@ -65,6 +42,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('petugas/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

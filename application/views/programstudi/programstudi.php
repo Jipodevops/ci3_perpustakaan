@@ -31,28 +31,6 @@
 				</thead>
 
 				<tbody>
-					<?php $a = 1;
-					foreach($data_prodi as $prodi):?>
-					<tr>
-						<td><?php echo $a++; ?></td>
-						<td><?php echo $prodi['kode_prodi'];?></td>
-						<td><?php echo $prodi['nama_prodi'];?></td>
-						<td><?php echo $prodi['nama_fakultas'];?></td>
-						<td>
-							<a href="<?php echo site_url('programstudi/update/'.$prodi['kode_prodi']);?>" class="btn btn-warning">
-							Ubah
-							</a>
-							
-							<a href="<?php echo site_url('programstudi/delete/'.$prodi['kode_prodi']);?>" class="btn btn-danger"  onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-							Hapus
-							</a>
-							
-							<a href="<?php echo site_url('programstudi/export/'.$prodi['kode_prodi']);?>" class="btn btn-success">
-							Ekspor Prodi
-							</a>
-						</td>
-					</tr>
-					<?php endforeach?>		
 				</tbody>
 			</table>
 		</div>
@@ -62,6 +40,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('programstudi/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>

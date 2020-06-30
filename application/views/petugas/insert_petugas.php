@@ -32,7 +32,6 @@
 				</tr>
 				<tr>
 					<td>Username</td>
-					<td>
 					<td><input type="text" name="username" class="form-control" required=""></td>
                     </td>
 				</tr>

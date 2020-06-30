@@ -29,28 +29,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-					 $i = 1;
-					 foreach($data_kategori as $kategori): 
-					?>
-						<tr>
-							<td><?php echo $i++; ?></td>
-							<td><?php echo $kategori['id_kategoribuku']; ?></td>
-							<td><?php echo $kategori['kategori_buku']; ?></td>
-							<td>
-								<a href="<?php echo site_url('kategori_buku/update/'.$kategori['id_kategoribuku']);?>" class="btn btn-warning btn-circle">
-									<i class="fas fa-edit"></i>
-								</a>
-	
-								<a href="<?php echo site_url('kategori_buku/delete/'.$kategori['id_kategoribuku']);?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" class="btn btn-danger btn-circle">
-									<i class="fas fa-trash"></i>
-								</a>
-								<a href="<?php echo site_url('kategori_buku/export_single/'.$kategori['id_kategoribuku']);?>" class="btn btn-primary btn-circle">
-									<i class="fas fa-file-export"></i>
-								</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
 				</tbody>
 			</table>
 		</div>
@@ -60,6 +38,21 @@
 
 <script>
 	$(document).ready(function() {
-		$('#dataTable').DataTable();
+		table = $('#dataTable').DataTable({
+			"processing" : true,
+			"serverSide" : true,
+			"order" : [],
+			"ajax" :{
+				"url" : "<?php echo site_url('Kategori_buku/datatables') ?>",
+				"type" : "POST"
+			},
+			"columnDefs" : [
+				{
+					"targets" : [0],
+					"orderable" : false
+				},
+			],
+		});
 	});
 </script>
+

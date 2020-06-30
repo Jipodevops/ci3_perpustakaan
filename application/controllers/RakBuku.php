@@ -25,6 +25,48 @@
             $this->load->view('theme/index', $data);
         }
 
+        public function datatables() {
+            //menunda loading (bisa dihapus, hanya untuk menampilkan pesan processing)
+            //sleep(3000);
+    
+            //memanggil fungsi model datatables
+            $list = $this->rakbuku_model->get_datatables();
+            $data = array();
+            $no = $this->input->post('start');
+    
+            //mencetak data json
+            foreach ($list as $field) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $field['kode_rak'];
+                $row[] = $field['kategori'];
+                $row[] = $field['lokasi'];
+                $row[] = '<a href="'.site_url('rakbuku/update/'.$field['kode_rak']).'" class="btn btn-warning btn-circle">
+                <i class="fas fa-edit"></i>
+                </a>
+                <a href="'.site_url('rakbuku/delete/'.$field['kode_rak']).'" onclick="return confirm("Apakah anda yakin akan menghapus data ini?")" class="btn btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+                </a>
+                <a href="'.site_url('rakbuku/export/'.$field['kode_rak']).'" class="btn btn-primary btn-circle">
+                <i class="fas fa-file-export"></i>
+                </a>';
+    
+                $data[] = $row;
+            }
+        
+            //mengirim data json
+            $output = array(
+                "draw" => $this->input->post('draw'),
+                "recordsTotal" => $this->rakbuku_model->count_all(),
+                "recordsFiltered" => $this->rakbuku_model->count_filtered(),
+                "data" => $data,
+            );
+    
+            //output dalam format JSON
+            echo json_encode($output);
+        }
+
         public function insert(){
             $data = array(
                 'theme_page' => 'rak_buku/insert_rakbuku',
